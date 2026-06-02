@@ -6,6 +6,22 @@ A Discord bot, web app, and FastAPI backend for searching and organizing Juice W
 
 ---
 
+## ⚠️ Disclaimer
+
+This project is fan-made and not affiliated with Juice WRLD, his estate, or any label. Use responsibly and respectfully.
+
+**I (Thomas Birrell) am not responsible for:**
+- Any software downloads or file distribution via this tool or connected APIs
+- Any copyright infringement or unauthorized distribution
+- Any leaks or unauthorized sharing of copyrighted material
+- Any misuse of the Juice WRLD community API
+
+Users bear full responsibility for complying with copyright laws and the terms of service of any APIs used. The Juice WRLD community API integration is provided as-is for metadata purposes only.
+
+For official Juice WRLD music, visit [streaming platforms](https://open.spotify.com/artist/4MCBfE4596Uoi2O4DtmHO1).
+
+---
+
 ## Version History
 
 ### V1 (Current)
@@ -286,17 +302,3 @@ Contributions welcome! Please:
 5. Submit a pull request
 
 All tests and linting must pass (see GitHub Actions).
-
-## Disclaimer
-
-This project is fan-made and not affiliated with Juice WRLD, his estate, or any label. Use responsibly and respectfully.
-
-**I (Thomas Birrell) am not responsible for:**
-- Any software downloads or file distribution via this tool or connected APIs
-- Any copyright infringement or unauthorized distribution
-- Any leaks or unauthorized sharing of copyrighted material
-- Any misuse of the Juice WRLD community API
-
-Users bear full responsibility for complying with copyright laws and the terms of service of any APIs used. The Juice WRLD community API integration is provided as-is for metadata purposes only.
-
-For official Juice WRLD music, visit [streaming platforms](https://open.spotify.com/artist/4MCBfE4596Uoi2O4DtmHO1).
