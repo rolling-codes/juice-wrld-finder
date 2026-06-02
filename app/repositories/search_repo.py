@@ -1,9 +1,12 @@
 """Search repository for complex search operations."""
-from typing import List, Optional
-from sqlalchemy.orm import Session
-from sqlalchemy import or_
+from typing import Optional
 
-from app.models import Song, Alias
+from sqlalchemy import or_
+from sqlalchemy.orm import Session
+
+from app.models import Alias, Song
+from app.models.lyrics import LyricsSnippet
+from app.models.song import Producer
 
 
 class SearchRepository:
@@ -13,7 +16,7 @@ class SearchRepository:
         """Initialize with database session."""
         self.db = db
 
-    def full_text_search(self, query: str, skip: int = 0, limit: int = 50) -> List[Song]:
+    def full_text_search(self, query: str, skip: int = 0, limit: int = 50) -> list[Song]:
         """Perform full-text search across titles and aliases."""
         query_lower = query.lower().strip()
         if not query_lower:
@@ -31,7 +34,7 @@ class SearchRepository:
 
         return results
 
-    def search_by_producer(self, producer_name: str, skip: int = 0, limit: int = 50) -> List[Song]:
+    def search_by_producer(self, producer_name: str, skip: int = 0, limit: int = 50) -> list[Song]:
         """Search songs by producer name."""
         producer_lower = producer_name.lower()
         return self.db.query(Song).filter(
@@ -57,13 +60,9 @@ class SearchRepository:
         song = query.order_by("RANDOM()").first()
         return song
 
-    def search_lyrics(self, phrase: str, skip: int = 0, limit: int = 50) -> List[Song]:
+    def search_lyrics(self, phrase: str, skip: int = 0, limit: int = 50) -> list[Song]:
         """Search songs by lyric snippets."""
         phrase_lower = phrase.lower()
         return self.db.query(Song).filter(
             Song.lyrics.any(LyricsSnippet.snippet_text.ilike(f"%{phrase_lower}%"))
         ).offset(skip).limit(limit).all()
-
-
-from app.models import Producer
-from app.models.lyrics import LyricsSnippet

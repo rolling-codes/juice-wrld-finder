@@ -41,6 +41,30 @@ Downloads are restricted to PUBLIC visibility links. Admin-only links require au
 
 ---
 
+## Release Versions and References
+
+Songs can now include child records for alternate release versions and metadata references:
+
+- **Versions** group released, demo, session edit, base, and alternate versions under one song.
+- **Base version** marks the earliest known or source version for a song.
+- **References** cite metadata sources such as Juice WRLD API, Vault, Juicehub, MusicBrainz, Musicfetch, SonoVault, or manual notes.
+- References are metadata only. They are never treated as download links unless an admin separately creates a PUBLIC download link.
+
+Public endpoints:
+
+```http
+GET /songs/{song_id}/versions
+GET /songs/{song_id}/references
+```
+
+CSV import supports optional pipe-delimited columns:
+
+- `versions`: `title:base|Demo:10:notes`
+- `references`: `source_name,source_url,source_type,description`
+- `download_links`: `label,url,link_type,visibility`
+
+---
+
 ## Getting Started with Data
 
 To populate the database with song metadata:
@@ -272,6 +296,8 @@ python scripts/import_csv.py songs.csv
 GET  /health                           # Health check
 GET  /songs?era_id=1&release_status=released  # List songs with filters
 GET  /songs/{id}                       # Get song details
+GET  /songs/{id}/versions              # Get release/demo/session versions
+GET  /songs/{id}/references            # Get metadata references
 GET  /search?q=<query>                 # Search songs
 GET  /search/lyrics?q=<phrase>         # Search lyrics
 GET  /eras                             # List all eras

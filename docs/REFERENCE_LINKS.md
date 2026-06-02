@@ -37,6 +37,20 @@ These MEGA folders contain Juice WRLD songs and are referenced for **metadata pu
 - Reference official release information
 - Ask users to verify song details from official sources
 
+## Version and Reference Records
+
+The app stores references separately from download links. A reference can support metadata such as version type, earliest/base version, recorded date, surfaced date, source confidence, and notes. A reference URL is never used by `/downloads/{song_id}` unless an admin also creates a separate PUBLIC `DownloadLink`.
+
+Supported reference labels include:
+
+- Juice WRLD API
+- Juice WRLD Vault
+- Juicehub
+- MusicBrainz
+- Musicfetch
+- SonoVault
+- Manual
+
 ## Official Streaming Sources
 
 For released songs, always link to official platforms:

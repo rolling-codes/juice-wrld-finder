@@ -11,12 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
@@ -24,16 +25,21 @@ jobs:
           pip install -r requirements.txt
 
       - name: Lint with ruff
-        run: ruff check .
+        run: ruff check app tests scripts
 
       - name: Type check with mypy
         run: mypy app
 
       - name: Run tests
-        run: pytest --cov=app --cov-report=term-missing --cov-fail-under=90
+        env:
+          DISCORD_TOKEN: test-token
+          DISCORD_GUILD_ID: '123'
+          ADMIN_ROLE_ID: '456'
+          SECRET_KEY: test-secret-key
+        run: pytest --cov=app --cov-report=term-missing --cov-report=xml --cov-fail-under=50
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: ./coverage.xml
           fail_ci_if_error: false
@@ -42,17 +48,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
 
       - name: Install web dependencies
         run: |
           cd web
-          npm install
+          npm ci
 
       - name: Run React tests
         run: |

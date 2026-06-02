@@ -1,6 +1,8 @@
 """Admin audit and search logging models."""
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy.orm import relationship
 
 from app.db.base import Base
 
@@ -15,6 +17,8 @@ class ExternalSource(Base):
     source_url = Column(Text, nullable=False)
     notes = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    song = relationship("Song", back_populates="external_sources")
 
 
 class SearchEvent(Base):

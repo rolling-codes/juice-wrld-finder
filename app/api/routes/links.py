@@ -1,13 +1,14 @@
 """Download link management routes."""
-from typing import List, Optional
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 from app.api.deps import get_session
 from app.core.auth import require_admin
 from app.core.security import redact_private_urls
-from app.models import DownloadLink, LinkVisibility, LinkType
+from app.models import DownloadLink, LinkVisibility
 from app.repositories import SongRepository
 
 router = APIRouter(prefix="/links", tags=["links"])
@@ -43,11 +44,11 @@ class UpdateLinkRequest(BaseModel):
     visibility: Optional[str] = None
 
 
-@router.get("/songs/{song_id}", response_model=List[LinkResponse])
+@router.get("/songs/{song_id}", response_model=list[LinkResponse])
 async def get_public_links(
     song_id: int,
     db: Session = Depends(get_session),
-) -> List[DownloadLink]:
+) -> list[DownloadLink]:
     """Get public download links for a song (no auth required)."""
     repo = SongRepository(db)
     if not repo.get_by_id(song_id):
@@ -55,7 +56,7 @@ async def get_public_links(
 
     links = db.query(DownloadLink).filter(
         DownloadLink.song_id == song_id,
-        DownloadLink.visibility == LinkVisibility.PUBLIC,
+        DownloadLink.visibility == LinkVisibility.PUBLIC.value,
     ).all()
 
     # Redact private URLs as a safety measure
@@ -65,12 +66,12 @@ async def get_public_links(
     return links
 
 
-@router.get("/admin/songs/{song_id}", response_model=List[LinkResponse])
+@router.get("/admin/songs/{song_id}", response_model=list[LinkResponse])
 async def get_all_links(
     song_id: int,
     db: Session = Depends(get_session),
     _: dict = Depends(require_admin),
-) -> List[DownloadLink]:
+) -> list[DownloadLink]:
     """Get all download links for a song (admin only)."""
     repo = SongRepository(db)
     if not repo.get_by_id(song_id):

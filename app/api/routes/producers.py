@@ -1,8 +1,8 @@
 """Producer routes."""
-from typing import List
+
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 from app.api.deps import get_session
 from app.models import Producer
@@ -21,12 +21,12 @@ class ProducerResponse(BaseModel):
         from_attributes = True
 
 
-@router.get("", response_model=List[ProducerResponse])
+@router.get("", response_model=list[ProducerResponse])
 async def list_producers(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_session),
-) -> List[Producer]:
+) -> list[Producer]:
     """List all producers."""
     producers = db.query(Producer).offset(skip).limit(limit).all()
     return producers

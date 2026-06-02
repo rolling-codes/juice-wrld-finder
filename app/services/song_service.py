@@ -1,8 +1,9 @@
 """Business logic for song operations."""
-from typing import Optional, List
+from typing import Any, Optional
+
 from sqlalchemy.orm import Session
 
-from app.models import Song, Alias, Producer, Era
+from app.models import Alias, Era, Producer, Song
 from app.repositories import SongRepository
 
 
@@ -20,7 +21,7 @@ class SongService:
         era_name: Optional[str] = None,
         release_status: str = "unknown",
         download_status: str = "metadata_only",
-        **kwargs: any,
+        **kwargs: Any,
     ) -> Song:
         """Create a song with optional era assignment."""
         slug = self._create_slug(title)

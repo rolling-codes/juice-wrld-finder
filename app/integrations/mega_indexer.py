@@ -1,11 +1,11 @@
 """MEGA folder indexer for song discovery."""
-from typing import List, Optional, Tuple
 import logging
-from rapidfuzz import fuzz
+from typing import Optional
+
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.models import MegaFileReference, Song, Alias
+from app.models import MegaFileReference
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,8 @@
 """Juice WRLD API client."""
-from typing import Optional, List, Any
-import httpx
 import logging
+from typing import Optional
+
+import httpx
 
 from app.core.config import settings
 
@@ -16,7 +17,7 @@ class JuiceWRLDAPIClient:
         self.base_url = settings.juicewrld_api_base
         self.timeout = 10.0
 
-    async def search_songs(self, query: str, limit: int = 20) -> List[dict]:
+    async def search_songs(self, query: str, limit: int = 20) -> list[dict]:
         """Search for songs."""
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             try:
@@ -41,7 +42,7 @@ class JuiceWRLDAPIClient:
                 logger.error(f"API get_song error: {e}")
                 return None
 
-    async def get_songs(self, skip: int = 0, limit: int = 50) -> List[dict]:
+    async def get_songs(self, skip: int = 0, limit: int = 50) -> list[dict]:
         """Get all songs with pagination."""
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             try:
@@ -55,7 +56,7 @@ class JuiceWRLDAPIClient:
                 logger.error(f"API get_songs error: {e}")
                 return []
 
-    async def get_eras(self) -> List[dict]:
+    async def get_eras(self) -> list[dict]:
         """Get all eras."""
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             try:
@@ -66,7 +67,7 @@ class JuiceWRLDAPIClient:
                 logger.error(f"API get_eras error: {e}")
                 return []
 
-    async def get_producers(self) -> List[dict]:
+    async def get_producers(self) -> list[dict]:
         """Get all producers."""
         async with httpx.AsyncClient(timeout=self.timeout) as client:
             try:

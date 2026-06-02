@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { expect, afterEach, vi } from 'vitest'
+import { afterEach, vi } from 'vitest'
 import { cleanup } from '@testing-library/react'
 
 afterEach(() => {
@@ -20,6 +20,9 @@ vi.mock('../api/client', () => ({
     search: {
       query: vi.fn(),
       lyrics: vi.fn(),
+    },
+    links: {
+      public: vi.fn(),
     },
   },
 }))

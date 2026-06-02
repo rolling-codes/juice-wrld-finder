@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { fireEvent, render, screen } from '@testing-library/react'
 import SearchBar from './SearchBar'
 
 describe('SearchBar', () => {
@@ -10,13 +9,12 @@ describe('SearchBar', () => {
     expect(screen.getByPlaceholderText('Search songs...')).toBeInTheDocument()
   })
 
-  it('calls onSearch when input changes', async () => {
-    const user = userEvent.setup()
+  it('calls onSearch when input changes', () => {
     const mockHandler = vi.fn()
     render(<SearchBar onSearch={mockHandler} />)
 
     const input = screen.getByPlaceholderText('Search songs...')
-    await user.type(input, 'l')
+    fireEvent.change(input, { target: { value: 'l' } })
 
     expect(mockHandler).toHaveBeenCalled()
   })
@@ -27,13 +25,12 @@ describe('SearchBar', () => {
     expect(screen.getByPlaceholderText('Find a song...')).toBeInTheDocument()
   })
 
-  it('accepts typed input', async () => {
-    const user = userEvent.setup()
+  it('accepts typed input', () => {
     const mockHandler = vi.fn()
     render(<SearchBar onSearch={mockHandler} />)
 
     const input = screen.getByPlaceholderText('Search songs...') as HTMLInputElement
-    await user.type(input, 'test')
+    fireEvent.change(input, { target: { value: 'test' } })
 
     expect(input.value).toContain('test')
   })

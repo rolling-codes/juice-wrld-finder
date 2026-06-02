@@ -1,14 +1,15 @@
 """Admin commands cog."""
 import logging
+
 import discord
-from discord.ext import commands
 from discord import app_commands
+from discord.ext import commands
 
 from app.core.config import settings
 from app.core.security import check_admin_role
 from app.db import SessionLocal
-from app.services import SongService
 from app.integrations import MEGAIndexer
+from app.services import SongService
 
 logger = logging.getLogger(__name__)
 

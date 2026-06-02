@@ -2,9 +2,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.routes import (
+    admin,
+    auth,
+    bot,
+    downloads,
+    eras,
+    health,
+    links,
+    producers,
+    search,
+    songs,
+)
 from app.core.config import settings
 from app.db import Base, engine
-from app.api.routes import health, songs, search, eras, producers, admin, auth, links, bot, downloads
 
 # Create tables
 Base.metadata.create_all(bind=engine)

@@ -1,9 +1,10 @@
 """Authentication routes for admin login."""
 from datetime import timedelta
+
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel
 
-from app.core.auth import verify_password, create_access_token
+from app.core.auth import create_access_token, verify_password
 from app.core.config import settings
 
 router = APIRouter(prefix="/auth", tags=["auth"])

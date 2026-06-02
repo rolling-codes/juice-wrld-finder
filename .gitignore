@@ -20,6 +20,7 @@ wheels/
 .installed.cfg
 *.egg
 .venv/
+.venv*/
 venv/
 ENV/
 
@@ -42,6 +43,9 @@ node_modules/
 web/dist/
 web/build/
 web/.cache/
+web/*.tsbuildinfo
+web/vite.config.d.ts
+web/vite.config.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

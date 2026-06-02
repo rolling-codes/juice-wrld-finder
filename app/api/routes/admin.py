@@ -1,13 +1,14 @@
 """Admin routes."""
 from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 from app.api.deps import get_session
 from app.core.auth import require_admin
-from app.services import SongService
 from app.repositories import SongRepository
+from app.services import SongService
 
 router = APIRouter(prefix="/admin/songs", tags=["admin"])
 

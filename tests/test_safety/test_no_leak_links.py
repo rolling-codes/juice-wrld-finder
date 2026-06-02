@@ -1,5 +1,4 @@
 """Safety tests to verify no unauthorized links are leaked."""
-import pytest
 
 from app.core.security import redact_private_urls
 
