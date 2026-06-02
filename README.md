@@ -78,49 +78,127 @@ For official Juice WRLD music, visit [streaming platforms](https://open.spotify.
 - 📊 **Admin Tools** — CSV/JSON import, MEGA folder indexing, manual edits
 - 🧪 **90%+ Test Coverage** — Production-ready test suite
 
-## Quick Start
+## Installation Guides
 
-### Requirements
+Choose your deployment scenario below. All require Python 3.11+ and a cloned repository.
 
-- Python 3.11+
-- Discord bot token
-- (Optional) PostgreSQL + Redis for production
-
-### 1. Clone and Install
+### Setup: Clone and Install Dependencies
 
 ```bash
-git clone https://github.com/yourusername/juice-wrld-finder.git
+git clone https://github.com/rolling-codes/juice-wrld-finder.git
 cd juice-wrld-finder
 pip install -r requirements.txt
-cp .env.example .env
 ```
 
-### 2. Configure `.env`
+---
 
+### Option 1: Web App Only (No Discord)
+
+Use this if you want the public gallery + admin panel without the Discord bot.
+
+**Configure `.env`:**
+```env
+SECRET_KEY=your_secret_key_here
+CORS_ORIGINS=["http://localhost:5173"]
+DATABASE_URL=sqlite:///./juice_wrld.db
+```
+
+**Run:**
+```bash
+# Terminal 1: Backend API (port 8000)
+python -c "from app.db import Base, engine; Base.metadata.create_all(bind=engine)"
+uvicorn app.main:app --reload
+
+# Terminal 2: Frontend (port 5173)
+cd web
+npm install
+npm run dev
+```
+
+**Access:**
+- Web app: http://localhost:5173
+- API docs: http://localhost:8000/docs
+
+---
+
+### Option 2: Discord Bot Only (No Web App)
+
+Use this if you want just the Discord bot with backend metadata, no web interface.
+
+**Configure `.env`:**
 ```env
 DISCORD_TOKEN=your_bot_token
 DISCORD_GUILD_ID=your_guild_id
-ADMIN_ROLE_ID=your_role_id
-SECRET_KEY=generate_a_random_key
+ADMIN_ROLE_ID=your_admin_role_id
+SECRET_KEY=your_secret_key_here
+DATABASE_URL=sqlite:///./juice_wrld.db
+# Optional: for download link visibility
+EXPOSE_API_DOWNLOAD_LINKS=true
+EXPOSE_MEGA_LINKS=false
 ```
 
-### 3. Create Database and Run API
-
+**Run:**
 ```bash
-# Create tables
+# Terminal 1: Backend API (port 8000)
 python -c "from app.db import Base, engine; Base.metadata.create_all(bind=engine)"
-
-# Run API on port 8000
 uvicorn app.main:app --reload
-```
 
-### 4. Run Discord Bot (separate terminal)
-
-```bash
+# Terminal 2: Discord Bot
 python -m app.bot.client
 ```
 
-### 5. Import Initial Data
+**Use in Discord:**
+- `/jw search <query>` — Search songs
+- `/jw song <id>` — Get song details
+- `/jw era <era_name>` — Browse by era
+- `/jw random` — Random song
+
+---
+
+### Option 3: Full Stack (Web App + Discord Bot)
+
+Use this for complete functionality: web gallery, admin panel, and Discord integration.
+
+**Configure `.env`:**
+```env
+# Discord
+DISCORD_TOKEN=your_bot_token
+DISCORD_GUILD_ID=your_guild_id
+ADMIN_ROLE_ID=your_admin_role_id
+
+# Web App
+SECRET_KEY=your_secret_key_here
+CORS_ORIGINS=["http://localhost:5173"]
+DATABASE_URL=sqlite:///./juice_wrld.db
+
+# Optional Downloads
+EXPOSE_API_DOWNLOAD_LINKS=true
+EXPOSE_MEGA_LINKS=false
+```
+
+**Run:**
+```bash
+# Terminal 1: Backend API (port 8000)
+python -c "from app.db import Base, engine; Base.metadata.create_all(bind=engine)"
+uvicorn app.main:app --reload
+
+# Terminal 2: Discord Bot
+python -m app.bot.client
+
+# Terminal 3: Frontend (port 5173)
+cd web
+npm install
+npm run dev
+```
+
+**Access:**
+- Web app: http://localhost:5173
+- Discord commands: `/jw ...`
+- API docs: http://localhost:8000/docs
+
+---
+
+### Import Initial Data
 
 Prepare a CSV file with columns: `title`, `era`, `release_status`, `download_status`, `official_url`, `api_download_url`, `notes`, `aliases`, `producers`
 
