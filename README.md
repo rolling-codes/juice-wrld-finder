@@ -339,11 +339,11 @@ EXPOSE_MEGA_LINKS=false           # Show MEGA folder download links
 Configure these in `.env` to enable MEGA indexing:
 
 ```env
-MEGA_MAIN_COMP=https://mega.nz/folder/...
-MEGA_ERA_COMP=https://mega.nz/folder/...
-MEGA_COVER_ART_COMP=https://mega.nz/folder/...
-MEGA_MEDIA_COMP=https://mega.nz/folder/...
-MEGA_SESSION_EDITS_COMP=https://mega.nz/folder/...
+MEGA_MAIN_COMP=
+MEGA_ERA_COMP=
+MEGA_COVER_ART_COMP=
+MEGA_MEDIA_COMP=
+MEGA_SESSION_EDITS_COMP=
 ```
 
 ## Data Sources
