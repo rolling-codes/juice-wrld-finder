@@ -2,12 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main, develop, master]
   pull_request:
-    branches: [main, develop]
+    branches: [main, develop, master]
 
 jobs:
-  test:
+  backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,3 +37,29 @@ jobs:
         with:
           files: ./coverage.xml
           fail_ci_if_error: false
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install web dependencies
+        run: |
+          cd web
+          npm install
+
+      - name: Run React tests
+        run: |
+          cd web
+          npm test -- --run
+
+      - name: Build web app
+        run: |
+          cd web
+          npm run build
