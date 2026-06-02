@@ -24,6 +24,36 @@ For official Juice WRLD music, visit [streaming platforms](https://open.spotify.
 
 ---
 
+## Download Initial Data
+
+To get started with song metadata, you have three options:
+
+### Option A: Load From Juiceboard API (Recommended)
+The fastest way — syncs song metadata directly from the [Juiceboard API](https://juicewrldapi.com):
+
+```bash
+python scripts/sync_juiceboard_api.py
+```
+
+This populates songs, release status, and download links automatically.
+
+### Option B: Use Sample CSV
+Create a `songs.csv` file with these columns:
+```
+title,era,release_status,download_status,official_url,api_download_url,notes,aliases,producers
+Lucid Dreams,2018,released,available,https://spotify.com/...,https://juicewrldapi.com/...,Original release,Lucid Dream,Nick Mira
+```
+
+Then import:
+```bash
+python scripts/import_csv.py songs.csv
+```
+
+### Option C: Manual Database Entry
+Use the admin panel (once running) to add songs one at a time via the web interface at `http://localhost:5173/admin`.
+
+---
+
 ## Version History
 
 ### V1 (Current)
