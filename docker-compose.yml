@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./juice_wrld.db
+      - REDIS_URL=redis://redis:6379
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
+      - ADMIN_ROLE_ID=${ADMIN_ROLE_ID}
+      - EXPOSE_API_DOWNLOAD_LINKS=${EXPOSE_API_DOWNLOAD_LINKS}
+      - EXPOSE_MEGA_LINKS=${EXPOSE_MEGA_LINKS}
+      - SECRET_KEY=${SECRET_KEY}
+    volumes:
+      - ./juice_wrld.db:/app/juice_wrld.db
+    depends_on:
+      - redis
+    networks:
+      - juice-network
+
+  bot:
+    build: .
+    environment:
+      - DATABASE_URL=sqlite:///./juice_wrld.db
+      - REDIS_URL=redis://redis:6379
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DISCORD_GUILD_ID=${DISCORD_GUILD_ID}
+      - ADMIN_ROLE_ID=${ADMIN_ROLE_ID}
+      - EXPOSE_API_DOWNLOAD_LINKS=${EXPOSE_API_DOWNLOAD_LINKS}
+      - EXPOSE_MEGA_LINKS=${EXPOSE_MEGA_LINKS}
+      - SECRET_KEY=${SECRET_KEY}
+    command: python -m app.bot.client
+    volumes:
+      - ./juice_wrld.db:/app/juice_wrld.db
+    depends_on:
+      - redis
+    networks:
+      - juice-network
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - juice-network
+
+networks:
+  juice-network:
+    driver: bridge
