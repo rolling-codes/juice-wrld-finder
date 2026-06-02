@@ -65,29 +65,34 @@ Once the app is running, use the admin interface to add songs individually.
 ### V1 (Current)
 
 **What it is:**
-- Fully-functional FastAPI metadata backend with 12 database models and 17 API endpoints
+- Fully-functional FastAPI metadata backend with 12 database models and 18+ API endpoints
+- Public-facing React web app (song gallery, search, detail pages, downloads)
 - Discord bot with search, era browsing, random song selection, and admin commands
+- Download functionality via Juice WRLD API and MEGA folders
 - SQLite database with comprehensive music metadata schema
 - CSV/JSON bulk import tooling for easy data seeding
 
-**In Scope:**
+**Features:**
 - Core metadata models (songs, aliases, eras, producers, sessions, lyrics, cover art, media references)
 - Full-text + fuzzy search with RapidFuzz
-- MEGA folder integration (indexing only, no downloads)
-- Juice WRLD community API integration (optional)
+- MEGA folder integration (indexing and download links)
+- Juice WRLD API integration (metadata + download links)
+- Public web gallery with song browsing and search
+- Song detail pages with metadata and download options
 - Discord bot with metadata commands + admin tools
+- Download API endpoint (`GET /downloads/{song_id}`)
+- Link visibility control (PUBLIC/BOT/ADMIN)
 - 90%+ test coverage with pytest
 - Docker Compose setup (SQLite, Redis, bot, API)
 - GitHub Actions CI pipeline (ruff, mypy, pytest)
-- Complete documentation
+- Complete documentation and deployment guides
 
 **Out of Scope (V1):**
-- Web UI (public gallery, admin panel) — coming in V2
-- Authentication/authorization — coming in V2
-- Download link management — coming in V2
+- Admin panel (link management UI) — coming in V2
+- User authentication (JWT admin login) — coming in V2
 - PostgreSQL migration (phase 2 infrastructure)
 
-**Deployment:** Local development or Docker Compose. Not production-ready yet (SQLite, no auth).
+**Deployment:** Local development or Docker Compose. Choose web-only, bot-only, or full stack deployment.
 
 ---
 
