@@ -194,10 +194,9 @@ This project uses publicly available metadata from:
 
 See [docs/REFERENCE_LINKS.md](docs/REFERENCE_LINKS.md) and [docs/API_SOURCES.md](docs/API_SOURCES.md) for details.
 
-## Safety Guarantees
+## Features
 
-✅ **No audio downloading** — System never downloads files
-✅ **No file distribution** — No ZIP/MEGA proxying or mirroring
+✅ **Direct External Links** — Links to Juiceboard API and MEGA (no proxying)
 ✅ **Controlled link exposure** — Download URLs only shown if explicitly enabled
 ✅ **URL redaction** — Private file-hosting links redacted from bot responses
 ✅ **Admin-only operations** — Sensitive commands require role verification
