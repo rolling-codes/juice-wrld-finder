@@ -33,7 +33,7 @@ The app provides direct download access to songs from public sources:
 - **Specific Link:** `GET /downloads/{song_id}?link_id={link_id}` downloads a specific source
 
 **Supported Sources:**
-- Juiceboard API (community metadata)
+- Juice WRLD API (community metadata)
 - MEGA folders (if configured)
 - Official streaming links (where available)
 
@@ -45,7 +45,7 @@ Downloads are restricted to PUBLIC visibility links. Admin-only links require au
 
 To populate the database with song metadata:
 
-### Option A: Load From Juiceboard API (Recommended)
+### Option A: Load From Juice WRLD API (Recommended)
 ```bash
 python scripts/sync_juiceboard_api.py
 ```
@@ -302,7 +302,7 @@ MEGA_SESSION_EDITS_COMP=https://mega.nz/folder/...
 This project uses publicly available metadata from:
 
 1. **Official Releases** — Spotify, Apple Music, YouTube
-2. **Juiceboard API** — https://juicewrldapi.com (Juice WRLD community API)
+2. **Juice WRLD API** — https://juicewrldapi.com (Juice WRLD community API)
 3. **User-Submitted Data** — Via CSV/JSON import
 4. **MEGA Folder References** — Filename indexing only (no downloads)
 
@@ -310,7 +310,7 @@ See [docs/REFERENCE_LINKS.md](docs/REFERENCE_LINKS.md) and [docs/API_SOURCES.md]
 
 ## Features
 
-✅ **Direct External Links** — Links to Juiceboard API and MEGA (no proxying)
+✅ **Direct External Links** — Links to Juice WRLD API and MEGA (no proxying)
 ✅ **Controlled link exposure** — Download URLs only shown if explicitly enabled
 ✅ **URL redaction** — Private file-hosting links redacted from bot responses
 ✅ **Admin-only operations** — Sensitive commands require role verification
@@ -398,9 +398,9 @@ Changes auto-reload in both processes.
 
 ## API Integration Note
 
-This project integrates with the **Juiceboard API** ([https://juicewrldapi.com/](https://juicewrldapi.com/)) which may provide download links for songs. This tool is designed for **metadata discovery and organization only**. 
+This project integrates with the **Juice WRLD API** ([https://juicewrldapi.com/](https://juicewrldapi.com/)) which may provide download links for songs. This tool is designed for **metadata discovery and organization only**. 
 
-**Disclaimer:** This project includes a reference to the Juiceboard API that *can* be used to download songs, but **the rolling-codes team does not advise or endorse any software downloads or distribution**. Users are solely responsible for complying with copyright laws and the terms of service of any APIs used. **rolling-codes is not responsible for any downloads, leaks, or unauthorized distribution of copyrighted material.** Only download songs you have permission to download. Support the artist by using official streaming platforms when available.
+**Disclaimer:** This project includes a reference to the Juice WRLD API that *can* be used to download songs, but **the rolling-codes team does not advise or endorse any software downloads or distribution**. Users are solely responsible for complying with copyright laws and the terms of service of any APIs used. **rolling-codes is not responsible for any downloads, leaks, or unauthorized distribution of copyrighted material.** Only download songs you have permission to download. Support the artist by using official streaming platforms when available.
 
 ## License
 
