@@ -32,11 +32,26 @@ class SongResponse(BaseModel):
 async def list_songs(
     skip: int = 0,
     limit: int = 100,
+    era_id: int | None = None,
+    release_status: str | None = None,
+    producer_id: int | None = None,
     db: Session = Depends(get_session),
 ) -> List[Song]:
-    """List all songs."""
-    repo = SongRepository(db)
-    return repo.get_all(skip=skip, limit=limit)
+    """List all songs with optional filters."""
+    query = db.query(Song)
+
+    if era_id:
+        query = query.filter(Song.era_id == era_id)
+
+    if release_status:
+        query = query.filter(Song.release_status == release_status)
+
+    if producer_id:
+        query = query.filter(
+            Song.producers.any(id=producer_id)
+        )
+
+    return query.offset(skip).limit(limit).all()
 
 
 @router.get("/{song_id}", response_model=SongResponse)

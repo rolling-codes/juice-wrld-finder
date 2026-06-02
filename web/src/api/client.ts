@@ -41,8 +41,8 @@ export const api = {
     me: () => client.get('/auth/me'),
   },
   songs: {
-    list: (skip = 0, limit = 100) =>
-      client.get('/songs', { params: { skip, limit } }),
+    list: (skip = 0, limit = 100, eraId?: number, releaseStatus?: string) =>
+      client.get('/songs', { params: { skip, limit, era_id: eraId, release_status: releaseStatus } }),
     get: (id: number) => client.get(`/songs/${id}`),
   },
   search: {
