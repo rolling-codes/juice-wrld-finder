@@ -66,14 +66,14 @@ JUICEWRLD_API_BASE=https://juicewrldapi.com/api
 
 # Feature Flags
 EXPOSE_API_DOWNLOAD_LINKS=true
-EXPOSE_MEGA_LINKS=true
+EXPOSE_MEGA_LINKS=false
 
-# MEGA Folders
-MEGA_MAIN_COMP=https://mega.nz/folder/LU9gWY7Z#PMTqIPB69dT0OW5CiHEizQ
-MEGA_ERA_COMP=https://mega.nz/folder/XREQ3A7a#1IYPO9liju-ORDSZs4JJCQ
-MEGA_COVER_ART_COMP=https://mega.nz/folder/6B5wmJzL#OeN-JJXayEHfXyLYhLfBkg
-MEGA_MEDIA_COMP=https://mega.nz/folder/XU5FUCxJ#gECLcpANW9MkVFZtCfMe3Q
-MEGA_SESSION_EDITS_COMP=https://mega.nz/folder/DYZWiBBD#dtXjRHEOJTi2KWYGR2MGew
+# Optional MEGA folders. Leave blank unless you own or administer the folders.
+MEGA_MAIN_COMP=
+MEGA_ERA_COMP=
+MEGA_COVER_ART_COMP=
+MEGA_MEDIA_COMP=
+MEGA_SESSION_EDITS_COMP=
 
 # Security
 SECRET_KEY=your_secret_key_here_change_in_production

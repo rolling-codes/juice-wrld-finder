@@ -1,6 +1,9 @@
 {
   "name": "juice-wrld-finder-web",
-  "version": "0.2.0",
+  "version": "1.1.0",
+  "description": "React web app for music metadata, release versions, references, and public link management",
+  "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

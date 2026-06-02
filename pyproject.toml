@@ -4,9 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "juice-wrld-finder"
-version = "0.1.0"
-description = "Discord bot and API for searching Juice WRLD song metadata"
+version = "1.1.0"
+description = "Discord bot, FastAPI backend, and web app for music metadata, release versions, references, and public link management"
+readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "rolling-codes" }]
+keywords = ["metadata", "fastapi", "discord-bot", "react", "music"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: FastAPI",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+]
 
 dependencies = [
     "fastapi==0.104.1",

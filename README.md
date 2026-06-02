@@ -149,6 +149,14 @@ Once the app is running, use the admin interface to add songs individually.
 
 Choose your deployment scenario below. All require Python 3.11+ and a cloned repository.
 
+GitHub Releases provide three ready-to-unpack packages:
+
+- `juice-wrld-finder-desktop-app-view.zip` for the local desktop/web app experience.
+- `juice-wrld-finder-discord-bot.zip` for the Discord bot plus backend.
+- `juice-wrld-finder-discord-bot-plus-web.zip` for the complete Discord bot and web deployment.
+
+Release packages include `.env.example` only. Local databases, credentials, node modules, virtual environments, generated coverage, and direct private folder links are excluded.
+
 ### Setup: Clone and Install Dependencies
 
 ```bash
