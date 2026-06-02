@@ -1,6 +1,22 @@
 # Testing Guide
 
-This project uses **pytest** with 90%+ coverage requirement.
+This project uses **pytest** (backend) and **vitest** (frontend) with 90%+ coverage requirements.
+
+## Quick Start
+
+### Backend Tests (Python/pytest)
+```bash
+pytest                          # Run all backend tests
+pytest --cov=app               # With coverage report
+```
+
+### Frontend Tests (React/vitest)
+```bash
+cd web
+npm install                     # First time only
+npm test                        # Run all React tests
+npm run test:ui                 # Interactive test UI
+```
 
 ## Running Tests
 
@@ -142,17 +158,74 @@ async def test_juice_wrld_api():
     assert len(results) == 1
 ```
 
+## React Testing (Frontend)
+
+Located in `web/src/components/*.test.tsx`, uses **vitest** and **@testing-library/react**.
+
+### Test Structure
+
+```
+web/src/
+├── components/
+│   ├── SongCard.tsx
+│   ├── SongCard.test.tsx          # Component tests
+│   ├── FilterBar.tsx
+│   ├── FilterBar.test.tsx         # Integration tests
+│   └── SearchBar.test.tsx         # Input handling tests
+└── test/
+    └── setup.ts                   # Test environment setup
+```
+
+### Running React Tests
+
+```bash
+cd web
+npm test -- --run                   # Single run
+npm run test:ui                     # Interactive UI with file explorer
+npm test -- --watch                 # Watch mode (auto-rerun on change)
+```
+
+### React Test Examples
+
+```typescript
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import SongCard from './SongCard'
+
+it('renders song title', () => {
+  render(<SongCard song={mockSong} />)
+  expect(screen.getByText('Lucid Dreams')).toBeInTheDocument()
+})
+
+it('handles user interactions', async () => {
+  const user = userEvent.setup()
+  render(<SearchBar onSearch={vi.fn()} />)
+  const input = screen.getByPlaceholderText('Search songs...')
+  await user.type(input, 'test')
+  expect(input.value).toContain('test')
+})
+```
+
 ## CI/CD
 
-GitHub Actions runs:
+GitHub Actions runs both backend and frontend tests:
 
+### Backend (Python)
 ```bash
 ruff check .       # Linting
 mypy app           # Type checking
 pytest --cov=app --cov-fail-under=90  # Tests + coverage gate
 ```
 
-All must pass before merging to `main` or `develop`.
+### Frontend (React)
+```bash
+cd web
+npm install        # Install dependencies
+npm test -- --run  # Run vitest
+npm run build      # Build web app (catches build errors)
+```
+
+All must pass before merging to `main`, `develop`, or `master`.
 
 ## Tips
 
