@@ -24,33 +24,39 @@ For official Juice WRLD music, visit [streaming platforms](https://open.spotify.
 
 ---
 
-## Download Initial Data
+## Download Functionality
 
-To get started with song metadata, you have three options:
+The app provides direct download access to songs from public sources:
+
+- **Web Gallery:** Click the download button (↓) next to any link on the song detail page
+- **API Endpoint:** `GET /downloads/{song_id}` redirects to the first available PUBLIC link
+- **Specific Link:** `GET /downloads/{song_id}?link_id={link_id}` downloads a specific source
+
+**Supported Sources:**
+- Juiceboard API (community metadata)
+- MEGA folders (if configured)
+- Official streaming links (where available)
+
+Downloads are restricted to PUBLIC visibility links. Admin-only links require authentication.
+
+---
+
+## Getting Started with Data
+
+To populate the database with song metadata:
 
 ### Option A: Load From Juiceboard API (Recommended)
-The fastest way — syncs song metadata directly from the [Juiceboard API](https://juicewrldapi.com):
-
 ```bash
 python scripts/sync_juiceboard_api.py
 ```
 
-This populates songs, release status, and download links automatically.
-
 ### Option B: Use Sample CSV
-Create a `songs.csv` file with these columns:
-```
-title,era,release_status,download_status,official_url,api_download_url,notes,aliases,producers
-Lucid Dreams,2018,released,available,https://spotify.com/...,https://juicewrldapi.com/...,Original release,Lucid Dream,Nick Mira
-```
-
-Then import:
 ```bash
 python scripts/import_csv.py songs.csv
 ```
 
-### Option C: Manual Database Entry
-Use the admin panel (once running) to add songs one at a time via the web interface at `http://localhost:5173/admin`.
+### Option C: Manual Entry via Admin Panel
+Once the app is running, use the admin interface to add songs individually.
 
 ---
 

@@ -105,7 +105,16 @@ export default function SongDetail() {
             <h3 className="text-sm text-gray-400 mb-4">Download Links</h3>
             <div className="flex flex-wrap gap-3">
               {links.map((link) => (
-                <DownloadButton key={link.id} link={link} />
+                <div key={link.id} className="flex gap-2">
+                  <DownloadButton link={link} />
+                  <a
+                    href={`/api/downloads/${songId}?link_id=${link.id}`}
+                    className="inline-block px-3 py-2 rounded text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition"
+                    title="Download via API"
+                  >
+                    ↓
+                  </a>
+                </div>
               ))}
             </div>
           </div>

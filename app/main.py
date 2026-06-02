@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
 from app.db import Base, engine
-from app.api.routes import health, songs, search, eras, producers, admin, auth, links, bot
+from app.api.routes import health, songs, search, eras, producers, admin, auth, links, bot, downloads
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -32,6 +32,7 @@ app.include_router(eras.router)
 app.include_router(producers.router)
 app.include_router(auth.router)
 app.include_router(links.router)
+app.include_router(downloads.router)
 app.include_router(bot.router)
 app.include_router(admin.router)
 
