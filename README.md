@@ -269,7 +269,7 @@ Changes auto-reload in both processes.
 
 This project integrates with the **Juice WRLD community API** (`https://juicewrldapi.com/`) which may provide download links for songs. This tool is designed for **metadata discovery and organization only**. 
 
-**Disclaimer:** While this tool can reference the Juice WRLD API and its download capabilities, **users are responsible for respecting copyright and intellectual property rights**. Only download songs you have permission to download. Support the artist by using official streaming platforms when available.
+**Disclaimer:** This project includes a reference to the Juice WRLD community API that *can* be used to download songs, but **I (Thomas Birrell) do not advise or endorse any software downloads or distribution**. Users are solely responsible for complying with copyright laws and the terms of service of any APIs used. **I am not responsible for any downloads, leaks, or unauthorized distribution of copyrighted material.** Only download songs you have permission to download. Support the artist by using official streaming platforms when available.
 
 ## License
 
@@ -291,6 +291,12 @@ All tests and linting must pass (see GitHub Actions).
 
 This project is fan-made and not affiliated with Juice WRLD, his estate, or any label. Use responsibly and respectfully.
 
-The Juice WRLD community API integration is provided as-is. Users bear full responsibility for complying with copyright laws and the terms of service of any APIs used.
+**I (Thomas Birrell) am not responsible for:**
+- Any software downloads or file distribution via this tool or connected APIs
+- Any copyright infringement or unauthorized distribution
+- Any leaks or unauthorized sharing of copyrighted material
+- Any misuse of the Juice WRLD community API
+
+Users bear full responsibility for complying with copyright laws and the terms of service of any APIs used. The Juice WRLD community API integration is provided as-is for metadata purposes only.
 
 For official Juice WRLD music, visit [streaming platforms](https://open.spotify.com/artist/4MCBfE4596Uoi2O4DtmHO1).
