@@ -12,7 +12,7 @@ This project is fan-made and not affiliated with Juice WRLD, his estate, or any 
 
 **This project includes a connection to the Juice WRLD community API.**
 
-**@officerthomasbirrell is not responsible for:**
+**rolling-codes is not responsible for:**
 - Any software downloads or file distribution via this tool or connected APIs
 - Any copyright infringement or unauthorized distribution
 - Any leaks or unauthorized sharing of copyrighted material
@@ -287,7 +287,7 @@ Changes auto-reload in both processes.
 
 This project integrates with the **Juice WRLD community API** (`https://juicewrldapi.com/`) which may provide download links for songs. This tool is designed for **metadata discovery and organization only**. 
 
-**Disclaimer:** This project includes a reference to the Juice WRLD community API that *can* be used to download songs, but **I (Thomas Birrell) do not advise or endorse any software downloads or distribution**. Users are solely responsible for complying with copyright laws and the terms of service of any APIs used. **I am not responsible for any downloads, leaks, or unauthorized distribution of copyrighted material.** Only download songs you have permission to download. Support the artist by using official streaming platforms when available.
+**Disclaimer:** This project includes a reference to the Juice WRLD community API that *can* be used to download songs, but **the rolling-codes team does not advise or endorse any software downloads or distribution**. Users are solely responsible for complying with copyright laws and the terms of service of any APIs used. **rolling-codes is not responsible for any downloads, leaks, or unauthorized distribution of copyrighted material.** Only download songs you have permission to download. Support the artist by using official streaming platforms when available.
 
 ## License
 
