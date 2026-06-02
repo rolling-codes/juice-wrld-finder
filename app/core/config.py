@@ -30,6 +30,13 @@ class Settings(BaseSettings):
 
     # Security
     secret_key: str
+    admin_username: str = "admin"
+    admin_password_hash: str = ""
+    bot_api_key: str = ""
+
+    # Web app
+    cors_origins: list[str] = ["http://localhost:5173"]
+    public_base_url: str = "http://localhost:8000"
 
     class Config:
         """Load from .env file."""

@@ -2,8 +2,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.core.config import settings
 from app.db import Base, engine
-from app.api.routes import health, songs, search, eras, producers, admin
+from app.api.routes import health, songs, search, eras, producers, admin, auth, links, bot
 
 # Create tables
 Base.metadata.create_all(bind=engine)
@@ -11,13 +12,13 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title="Juice WRLD Metadata Finder",
     description="Discord bot and API for searching Juice WRLD song metadata",
-    version="0.1.0",
+    version="0.2.0",
 )
 
-# CORS middleware
+# CORS middleware — allow specific origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,6 +30,9 @@ app.include_router(songs.router)
 app.include_router(search.router)
 app.include_router(eras.router)
 app.include_router(producers.router)
+app.include_router(auth.router)
+app.include_router(links.router)
+app.include_router(bot.router)
 app.include_router(admin.router)
 
 

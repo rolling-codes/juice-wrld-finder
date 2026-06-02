@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from app.api.deps import get_session
+from app.core.auth import require_admin
 from app.services import SongService
 from app.repositories import SongRepository
 
@@ -38,6 +39,7 @@ class UpdateSongRequest(BaseModel):
 async def create_song(
     req: CreateSongRequest,
     db: Session = Depends(get_session),
+    _: dict = Depends(require_admin),
 ) -> dict:
     """Create a new song."""
     service = SongService(db)
@@ -58,6 +60,7 @@ async def update_song(
     song_id: int,
     req: UpdateSongRequest,
     db: Session = Depends(get_session),
+    _: dict = Depends(require_admin),
 ) -> dict:
     """Update a song."""
     repo = SongRepository(db)
@@ -74,6 +77,7 @@ async def update_song(
 async def delete_song(
     song_id: int,
     db: Session = Depends(get_session),
+    _: dict = Depends(require_admin),
 ) -> dict:
     """Delete a song."""
     repo = SongRepository(db)

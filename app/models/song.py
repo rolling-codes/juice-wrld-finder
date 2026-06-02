@@ -56,6 +56,7 @@ class Song(Base):
     media_references = relationship("MediaReference", back_populates="song", cascade="all, delete-orphan")
     external_sources = relationship("ExternalSource", back_populates="song", cascade="all, delete-orphan")
     mega_files = relationship("MegaFileReference", back_populates="song", cascade="all, delete-orphan")
+    download_links = relationship("DownloadLink", back_populates="song", cascade="all, delete-orphan")
     era = relationship("Era", back_populates="songs")
 
 

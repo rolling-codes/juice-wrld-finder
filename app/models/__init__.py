@@ -4,6 +4,7 @@ from app.models.session_model import RecordingSession
 from app.models.lyrics import LyricsSnippet
 from app.models.media import CoverArt, MediaReference, MegaFileReference
 from app.models.admin import ExternalSource, SearchEvent, AdminAuditLog
+from app.models.links import DownloadLink, LinkVisibility, LinkType
 
 __all__ = [
     "Song",
@@ -20,4 +21,7 @@ __all__ = [
     "ExternalSource",
     "SearchEvent",
     "AdminAuditLog",
+    "DownloadLink",
+    "LinkVisibility",
+    "LinkType",
 ]
