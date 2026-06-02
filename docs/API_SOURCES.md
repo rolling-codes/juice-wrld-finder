@@ -2,9 +2,10 @@
 
 This document describes the external data sources used by the Juice WRLD Metadata Finder.
 
-## Juice WRLD Community API
+## Juiceboard API
 
-**Official:** Unofficial / Community-maintained
+**Official:** Unofficial / Community-maintained  
+**Also known as:** Juice WRLD Community API
 
 **Base URL:** `https://juicewrldapi.com/api`
 
@@ -93,13 +94,13 @@ MEGA links are similarly gated by `EXPOSE_MEGA_LINKS` environment flag:
 
 1. Use CSV/JSON import script to seed metadata
 2. Run `/jw admin reindex` to index MEGA folders
-3. Optionally fetch from Juice WRLD API for verification
+3. Optionally fetch from Juiceboard API for verification
 
 ### Ongoing Updates
 
 - Manual updates via `/jw admin add-song` or `/jw admin edit-song`
 - Periodic MEGA reindex to catch new uploads
-- Periodic Juice WRLD API sync for official releases
+- Periodic Juiceboard API sync for official releases
 
 ### Conflict Resolution
 
