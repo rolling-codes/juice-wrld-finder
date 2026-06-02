@@ -10,7 +10,9 @@ A Discord bot, web app, and FastAPI backend for searching and organizing Juice W
 
 This project is fan-made and not affiliated with Juice WRLD, his estate, or any label. Use responsibly and respectfully.
 
-**I (Thomas Birrell) am not responsible for:**
+**This project includes a connection to the Juice WRLD community API.**
+
+**@officerthomasbirrell is not responsible for:**
 - Any software downloads or file distribution via this tool or connected APIs
 - Any copyright infringement or unauthorized distribution
 - Any leaks or unauthorized sharing of copyrighted material
