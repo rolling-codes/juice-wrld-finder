@@ -265,6 +265,12 @@ python -m app.bot.client
 
 Changes auto-reload in both processes.
 
+## API Integration Note
+
+This project integrates with the **Juice WRLD community API** (`https://juicewrldapi.com/`) which may provide download links for songs. This tool is designed for **metadata discovery and organization only**. 
+
+**Disclaimer:** While this tool can reference the Juice WRLD API and its download capabilities, **users are responsible for respecting copyright and intellectual property rights**. Only download songs you have permission to download. Support the artist by using official streaming platforms when available.
+
 ## License
 
 MIT
@@ -283,6 +289,8 @@ All tests and linting must pass (see GitHub Actions).
 
 ## Disclaimer
 
-This project is fan-made and not affiliated with Juice WRLD, his estate, or any label. Use respectfully.
+This project is fan-made and not affiliated with Juice WRLD, his estate, or any label. Use responsibly and respectfully.
+
+The Juice WRLD community API integration is provided as-is. Users bear full responsibility for complying with copyright laws and the terms of service of any APIs used.
 
 For official Juice WRLD music, visit [streaming platforms](https://open.spotify.com/artist/4MCBfE4596Uoi2O4DtmHO1).
