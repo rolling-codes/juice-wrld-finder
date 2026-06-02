@@ -16,7 +16,11 @@ const mockSong: Song = {
 }
 
 function renderWithRouter(component: React.ReactElement) {
-  return render(<BrowserRouter>{component}</BrowserRouter>)
+  return render(
+    <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+      {component}
+    </BrowserRouter>,
+  )
 }
 
 describe('SongCard', () => {

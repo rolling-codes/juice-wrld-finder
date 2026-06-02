@@ -1,6 +1,6 @@
 """FastAPI dependency injections."""
-from sqlalchemy.orm import Session
 from fastapi import Depends
+from sqlalchemy.orm import Session
 
 from app.db import get_db
 

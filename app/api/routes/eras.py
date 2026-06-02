@@ -1,12 +1,13 @@
 """Era routes."""
-from typing import List, Optional
+from typing import Optional
+
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 from app.api.deps import get_session
-from app.repositories import EraRepository, SongRepository
 from app.models import Era, Song
+from app.repositories import EraRepository, SongRepository
 
 router = APIRouter(prefix="/eras", tags=["eras"])
 
@@ -36,12 +37,12 @@ class SongResponse(BaseModel):
         from_attributes = True
 
 
-@router.get("", response_model=List[EraResponse])
+@router.get("", response_model=list[EraResponse])
 async def list_eras(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_session),
-) -> List[Era]:
+) -> list[Era]:
     """List all eras."""
     repo = EraRepository(db)
     return repo.get_all(skip=skip, limit=limit)
@@ -60,13 +61,13 @@ async def get_era(
     return era
 
 
-@router.get("/{era_id}/songs", response_model=List[SongResponse])
+@router.get("/{era_id}/songs", response_model=list[SongResponse])
 async def get_era_songs(
     era_id: int,
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_session),
-) -> List[Song]:
+) -> list[Song]:
     """Get songs from an era."""
     era_repo = EraRepository(db)
     if not era_repo.get_by_id(era_id):

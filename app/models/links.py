@@ -1,7 +1,8 @@
 """Download link model."""
 from datetime import datetime
 from enum import Enum
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text
+
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import relationship
 
 from app.db.base import Base
@@ -30,8 +31,8 @@ class DownloadLink(Base):
     song_id = Column(Integer, ForeignKey("song.id"), nullable=False, index=True)
     label = Column(String(100), nullable=False)
     url = Column(Text, nullable=False)
-    link_type = Column(String(20), default=LinkType.OTHER, nullable=False)
-    visibility = Column(String(20), default=LinkVisibility.BOT, nullable=False)
+    link_type = Column(String(20), default=LinkType.OTHER.value, nullable=False)
+    visibility = Column(String(20), default=LinkVisibility.BOT.value, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 

@@ -1,10 +1,19 @@
 """Database models."""
-from app.models.song import Song, Alias, Era, Producer, ReleaseStatus, DownloadStatus
-from app.models.session_model import RecordingSession
+from app.models.admin import AdminAuditLog, ExternalSource, SearchEvent
+from app.models.links import DownloadLink, LinkType, LinkVisibility
 from app.models.lyrics import LyricsSnippet
 from app.models.media import CoverArt, MediaReference, MegaFileReference
-from app.models.admin import ExternalSource, SearchEvent, AdminAuditLog
-from app.models.links import DownloadLink, LinkVisibility, LinkType
+from app.models.session_model import RecordingSession
+from app.models.song import (
+    Alias,
+    DownloadStatus,
+    Era,
+    Producer,
+    ReleaseStatus,
+    Song,
+    SongReference,
+    SongVersion,
+)
 
 __all__ = [
     "Song",
@@ -24,4 +33,6 @@ __all__ = [
     "DownloadLink",
     "LinkVisibility",
     "LinkType",
+    "SongVersion",
+    "SongReference",
 ]

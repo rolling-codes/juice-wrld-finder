@@ -1,5 +1,5 @@
 """Download routes - redirect to external sources."""
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
@@ -31,7 +31,7 @@ async def download_song(
         link = link_repo.get_by_id(link_id)
         if not link or link.song_id != song_id:
             raise HTTPException(status_code=404, detail="Download link not found")
-        if link.visibility != "PUBLIC":
+        if link.visibility != "public":
             raise HTTPException(status_code=403, detail="Link not publicly available")
         return RedirectResponse(url=link.url)
 

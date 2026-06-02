@@ -1,15 +1,16 @@
 """Search commands cog."""
 import logging
-from typing import Optional
-import discord
-from discord.ext import commands
-from discord import app_commands
 
-from app.core.security import redact_private_urls
+import discord
+from discord import app_commands
+from discord.ext import commands
+
 from app.core.config import settings
+from app.core.security import redact_private_urls
 from app.db import SessionLocal
-from app.services import SearchService
+from app.models import Era
 from app.repositories import SongRepository
+from app.services import SearchService
 
 logger = logging.getLogger(__name__)
 
@@ -213,6 +214,3 @@ class SearchCog(commands.Cog):
 async def setup(bot: commands.Bot) -> None:
     """Setup cog."""
     await bot.add_cog(SearchCog(bot))
-
-
-from app.models import Era

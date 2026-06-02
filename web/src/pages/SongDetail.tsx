@@ -2,21 +2,63 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '../api/client'
 import DownloadButton from '../components/DownloadButton'
+import type { DownloadLink, Song, SongReference, SongVersion } from '../types'
+
+function versionTitle(version: SongVersion, fallback: string) {
+  return version.title || fallback
+}
+
+function versionMeta(version: SongVersion) {
+  return [version.version_type, version.release_status, version.source_name]
+    .filter(Boolean)
+    .join(' · ')
+}
+
+function isBaseVersion(version: SongVersion) {
+  return version.is_base_version
+}
+
+function referenceTitle(reference: SongReference) {
+  return reference.source_name
+}
+
+function actionKind(link: DownloadLink) {
+  const value = `${link.link_type} ${link.label}`.toLowerCase()
+  if (value.includes('official') || value.includes('stream') || value.includes('listen') || value.includes('audio')) {
+    return 'listen'
+  }
+  if (value.includes('reference') || value.includes('source')) {
+    return 'reference'
+  }
+  return 'download'
+}
 
 export default function SongDetail() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const songId = id ? parseInt(id, 10) : null
 
-  const { data: song, isLoading: songLoading } = useQuery({
+  const { data: song, isLoading: songLoading } = useQuery<Song | null>({
     queryKey: ['song', songId],
     queryFn: () => (songId ? api.songs.get(songId).then((res) => res.data) : null),
     enabled: !!songId,
   })
 
-  const { data: links = [], isLoading: linksLoading } = useQuery({
+  const { data: links = [] } = useQuery<DownloadLink[]>({
     queryKey: ['songLinks', songId],
     queryFn: () => (songId ? api.links.public(songId).then((res) => res.data) : []),
+    enabled: !!songId,
+  })
+
+  const { data: versions = [] } = useQuery<SongVersion[]>({
+    queryKey: ['songVersions', songId],
+    queryFn: () => (songId ? api.songs.versions(songId).then((res) => res.data) : []),
+    enabled: !!songId,
+  })
+
+  const { data: references = [] } = useQuery<SongReference[]>({
+    queryKey: ['songReferences', songId],
+    queryFn: () => (songId ? api.songs.references(songId).then((res) => res.data) : []),
     enabled: !!songId,
   })
 
@@ -55,6 +97,11 @@ export default function SongDetail() {
       </div>
     )
   }
+
+  const baseVersion = versions.find(isBaseVersion) ?? versions[0]
+  const listenLinks = links.filter((link) => actionKind(link) === 'listen')
+  const referenceLinks = links.filter((link) => actionKind(link) === 'reference')
+  const downloadLinks = links.filter((link) => actionKind(link) === 'download')
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -100,11 +147,106 @@ export default function SongDetail() {
           </div>
         )}
 
-        {links.length > 0 ? (
-          <div>
-            <h3 className="text-sm text-gray-400 mb-4">Download Links</h3>
+        {versions.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-sm text-gray-400 mb-4">Version Stack</h3>
+            {baseVersion && (
+              <div className="mb-4 rounded-lg border border-cyan-800 bg-cyan-950/40 p-4">
+                <p className="text-xs uppercase tracking-wide text-cyan-300 mb-1">Base Version</p>
+                <p className="font-semibold">{versionTitle(baseVersion, song.title)}</p>
+                {baseVersion.notes && <p className="text-sm text-gray-300 mt-2">{baseVersion.notes}</p>}
+              </div>
+            )}
+            <div className="space-y-3">
+              {versions.map((version, index) => (
+                <div key={version.id} className="rounded-lg border border-gray-700 bg-gray-900/60 p-4">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p className="font-medium">{versionTitle(version, `Version ${index + 1}`)}</p>
+                      {versionMeta(version) && <p className="text-sm text-gray-400 mt-1">{versionMeta(version)}</p>}
+                    </div>
+                    {isBaseVersion(version) && (
+                      <span className="rounded bg-cyan-900 px-2 py-1 text-xs font-medium text-cyan-100">Base</span>
+                    )}
+                  </div>
+                  {version.notes && <p className="text-sm text-gray-300 mt-3">{version.notes}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {references.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-sm text-gray-400 mb-4">References</h3>
+            <div className="overflow-x-auto rounded-lg border border-gray-700">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-gray-900 text-gray-400">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Reference</th>
+                    <th className="px-4 py-3 font-medium">Source</th>
+                    <th className="px-4 py-3 font-medium">Type</th>
+                    <th className="px-4 py-3 font-medium">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-700">
+                  {references.map((reference) => (
+                    <tr key={reference.id}>
+                      <td className="px-4 py-3">
+                        <p className="font-medium">{referenceTitle(reference)}</p>
+                      {reference.description && <p className="text-gray-400 mt-1">{reference.description}</p>}
+                    </td>
+                      <td className="px-4 py-3 text-gray-300">{reference.source_name}</td>
+                      <td className="px-4 py-3 text-gray-300">{reference.source_type}</td>
+                      <td className="px-4 py-3">
+                        {reference.source_url ? (
+                          <a
+                            href={reference.source_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block rounded bg-gray-700 px-3 py-2 text-xs font-medium text-white transition hover:bg-gray-600"
+                          >
+                            Reference
+                          </a>
+                        ) : (
+                          <span className="text-gray-500">-</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {listenLinks.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-sm text-gray-400 mb-4">Listen</h3>
             <div className="flex flex-wrap gap-3">
-              {links.map((link) => (
+              {listenLinks.map((link) => (
+                <DownloadButton key={link.id} link={link} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {referenceLinks.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-sm text-gray-400 mb-4">Reference Actions</h3>
+            <div className="flex flex-wrap gap-3">
+              {referenceLinks.map((link) => (
+                <DownloadButton key={link.id} link={link} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {downloadLinks.length > 0 ? (
+          <div>
+            <h3 className="text-sm text-gray-400 mb-4">Download</h3>
+            <div className="flex flex-wrap gap-3">
+              {downloadLinks.map((link) => (
                 <div key={link.id} className="flex gap-2">
                   <DownloadButton link={link} />
                   <a

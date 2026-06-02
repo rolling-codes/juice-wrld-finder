@@ -1,8 +1,9 @@
 """Discord bot client setup."""
-import logging
 import asyncio
-from discord.ext import commands
+import logging
+
 import discord
+from discord.ext import commands
 
 from app.core.config import settings
 

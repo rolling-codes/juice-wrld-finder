@@ -1,9 +1,8 @@
 """Search service with fuzzy matching."""
-from typing import List, Tuple
 from rapidfuzz import fuzz
 from sqlalchemy.orm import Session
 
-from app.models import Song, Alias
+from app.models import Song
 from app.repositories import SearchRepository
 
 
@@ -20,6 +19,21 @@ class SearchResult:
         return {
             "id": self.song.id,
             "title": self.song.title,
+            "slug": self.song.slug,
+            "release_status": self.song.release_status,
+            "download_status": self.song.download_status,
+            "official_url": self.song.official_url,
+            "notes": self.song.notes,
+            "era_id": self.song.era_id,
+            "version_count": len(self.song.versions),
+            "reference_count": len(self.song.references),
+            "source_names": sorted(
+                {
+                    reference.source_name
+                    for reference in self.song.references
+                    if reference.source_name
+                }
+            ),
             "confidence": round(self.confidence, 2),
         }
 
@@ -34,7 +48,7 @@ class SearchService:
         self.db = db
         self.repo = SearchRepository(db)
 
-    def search(self, query: str, skip: int = 0, limit: int = 50) -> List[SearchResult]:
+    def search(self, query: str, skip: int = 0, limit: int = 50) -> list[SearchResult]:
         """Search songs with fuzzy matching fallback."""
         query = query.strip().lower()
         if not query:
@@ -42,6 +56,8 @@ class SearchService:
 
         # Phase 1: Full-text search
         results = self.repo.full_text_search(query, skip=0, limit=100)
+        if not results:
+            results = self.db.query(Song).limit(100).all()
 
         # Phase 2: Score and rank results
         scored = self._score_results(query, results)
@@ -54,7 +70,7 @@ class SearchService:
 
         return above_threshold[skip : skip + limit]
 
-    def _score_results(self, query: str, songs: List[Song]) -> List[SearchResult]:
+    def _score_results(self, query: str, songs: list[Song]) -> list[SearchResult]:
         """Score songs by relevance to query."""
         results = []
 
@@ -84,11 +100,11 @@ class SearchService:
 
         return results
 
-    def search_by_lyrics(self, phrase: str, skip: int = 0, limit: int = 50) -> List[Song]:
+    def search_by_lyrics(self, phrase: str, skip: int = 0, limit: int = 50) -> list[Song]:
         """Search by lyric snippets."""
         return self.repo.search_lyrics(phrase, skip=skip, limit=limit)
 
-    def search_by_producer(self, producer_name: str, skip: int = 0, limit: int = 50) -> List[Song]:
+    def search_by_producer(self, producer_name: str, skip: int = 0, limit: int = 50) -> list[Song]:
         """Search by producer name."""
         return self.repo.search_by_producer(producer_name, skip=skip, limit=limit)
 

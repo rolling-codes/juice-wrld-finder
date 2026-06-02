@@ -41,6 +41,30 @@ Downloads are restricted to PUBLIC visibility links. Admin-only links require au
 
 ---
 
+## Release Versions and References
+
+Songs can now include child records for alternate release versions and metadata references:
+
+- **Versions** group released, demo, session edit, base, and alternate versions under one song.
+- **Base version** marks the earliest known or source version for a song.
+- **References** cite metadata sources such as Juice WRLD API, Vault, Juicehub, MusicBrainz, Musicfetch, SonoVault, or manual notes.
+- References are metadata only. They are never treated as download links unless an admin separately creates a PUBLIC download link.
+
+Public endpoints:
+
+```http
+GET /songs/{song_id}/versions
+GET /songs/{song_id}/references
+```
+
+CSV import supports optional pipe-delimited columns:
+
+- `versions`: `title:base|Demo:10:notes`
+- `references`: `source_name,source_url,source_type,description`
+- `download_links`: `label,url,link_type,visibility`
+
+---
+
 ## Getting Started with Data
 
 To populate the database with song metadata:
@@ -124,6 +148,14 @@ Once the app is running, use the admin interface to add songs individually.
 ## Installation Guides
 
 Choose your deployment scenario below. All require Python 3.11+ and a cloned repository.
+
+GitHub Releases provide three ready-to-unpack packages:
+
+- `juice-wrld-finder-desktop-app-view.zip` for the local desktop/web app experience.
+- `juice-wrld-finder-discord-bot.zip` for the Discord bot plus backend.
+- `juice-wrld-finder-discord-bot-plus-web.zip` for the complete Discord bot and web deployment.
+
+Release packages include `.env.example` only. Local databases, credentials, node modules, virtual environments, generated coverage, and direct private folder links are excluded.
 
 ### Setup: Clone and Install Dependencies
 
@@ -272,6 +304,8 @@ python scripts/import_csv.py songs.csv
 GET  /health                           # Health check
 GET  /songs?era_id=1&release_status=released  # List songs with filters
 GET  /songs/{id}                       # Get song details
+GET  /songs/{id}/versions              # Get release/demo/session versions
+GET  /songs/{id}/references            # Get metadata references
 GET  /search?q=<query>                 # Search songs
 GET  /search/lyrics?q=<phrase>         # Search lyrics
 GET  /eras                             # List all eras
@@ -305,11 +339,11 @@ EXPOSE_MEGA_LINKS=false           # Show MEGA folder download links
 Configure these in `.env` to enable MEGA indexing:
 
 ```env
-MEGA_MAIN_COMP=https://mega.nz/folder/...
-MEGA_ERA_COMP=https://mega.nz/folder/...
-MEGA_COVER_ART_COMP=https://mega.nz/folder/...
-MEGA_MEDIA_COMP=https://mega.nz/folder/...
-MEGA_SESSION_EDITS_COMP=https://mega.nz/folder/...
+MEGA_MAIN_COMP=
+MEGA_ERA_COMP=
+MEGA_COVER_ART_COMP=
+MEGA_MEDIA_COMP=
+MEGA_SESSION_EDITS_COMP=
 ```
 
 ## Data Sources

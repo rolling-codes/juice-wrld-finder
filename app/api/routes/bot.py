@@ -1,8 +1,8 @@
 """Bot API routes for Discord bot integration."""
-from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Header
-from sqlalchemy.orm import Session
+
+from fastapi import APIRouter, Depends, Header, HTTPException
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
 
 from app.api.deps import get_session
 from app.core.auth import require_bot
@@ -30,19 +30,19 @@ class BotSongResponse(BaseModel):
     slug: str
     release_status: str
     download_status: str
-    links: List[BotLinkResponse]
+    links: list[BotLinkResponse]
 
     class Config:
         from_attributes = True
 
 
-@router.get("/songs", response_model=List[BotSongResponse])
+@router.get("/songs", response_model=list[BotSongResponse])
 async def get_bot_songs(
     skip: int = 0,
     limit: int = 100,
     db: Session = Depends(get_session),
     x_api_key: str = Header(...),
-) -> List[dict]:
+) -> list[dict]:
     """Get all songs with public/bot links (requires bot API key)."""
     await require_bot(x_api_key)
 
@@ -75,12 +75,12 @@ async def get_bot_songs(
     return result
 
 
-@router.get("/songs/{song_id}/links", response_model=List[BotLinkResponse])
+@router.get("/songs/{song_id}/links", response_model=list[BotLinkResponse])
 async def get_bot_song_links(
     song_id: int,
     db: Session = Depends(get_session),
     x_api_key: str = Header(...),
-) -> List[DownloadLink]:
+) -> list[DownloadLink]:
     """Get public/bot links for a song (requires bot API key)."""
     await require_bot(x_api_key)
 

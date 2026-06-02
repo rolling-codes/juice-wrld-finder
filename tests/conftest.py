@@ -1,11 +1,17 @@
 """Test fixtures and configuration."""
+import os
+
 import pytest
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.pool import StaticPool
 
-from app.db.base import Base
-from app.core.config import settings
+os.environ.setdefault("DISCORD_TOKEN", "test-token")
+os.environ.setdefault("DISCORD_GUILD_ID", "123")
+os.environ.setdefault("ADMIN_ROLE_ID", "456")
+os.environ.setdefault("SECRET_KEY", "test-secret-key")
+
+from app.db.base import Base  # noqa: E402
 
 
 @pytest.fixture

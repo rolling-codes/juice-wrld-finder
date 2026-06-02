@@ -1,10 +1,8 @@
 """Test search service."""
-import pytest
 from sqlalchemy.orm import Session
 
-from app.services import SearchService
 from app.repositories import SongRepository
-from tests.conftest import db
+from app.services import SearchService
 
 
 def test_search_exact_match(db: Session) -> None:
@@ -23,7 +21,7 @@ def test_search_exact_match(db: Session) -> None:
 def test_search_fuzzy_match(db: Session) -> None:
     """Test fuzzy matching with typos."""
     repo = SongRepository(db)
-    song = repo.create(title="Lucid Dreams", slug="lucid-dreams")
+    repo.create(title="Lucid Dreams", slug="lucid-dreams")
 
     service = SearchService(db)
     results = service.search("lucid drams")  # Typo

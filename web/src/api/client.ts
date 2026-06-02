@@ -48,6 +48,8 @@ export const api = {
       return client.get('/songs', { params })
     },
     get: (id: number) => client.get(`/songs/${id}`),
+    versions: (id: number) => client.get(`/songs/${id}/versions`),
+    references: (id: number) => client.get(`/songs/${id}/references`),
   },
   search: {
     query: (q: string, skip = 0, limit = 50) =>

@@ -1,7 +1,19 @@
 """Song and related models."""
 from datetime import datetime
 from enum import Enum
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table, Text, UniqueConstraint
+
+from sqlalchemy import (
+    Boolean,
+    Column,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    Table,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import relationship
 
 from app.db.base import Base
@@ -39,8 +51,8 @@ class Song(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), unique=True, index=True, nullable=False)
     slug = Column(String(255), unique=True, index=True, nullable=False)
-    release_status = Column(String(20), default=ReleaseStatus.UNKNOWN, nullable=False)
-    download_status = Column(String(50), default=DownloadStatus.METADATA_ONLY, nullable=False)
+    release_status = Column(String(20), default=ReleaseStatus.UNKNOWN.value, nullable=False)
+    download_status = Column(String(50), default=DownloadStatus.METADATA_ONLY.value, nullable=False)
     api_download_url = Column(Text, nullable=True)
     official_url = Column(Text, nullable=True)
     notes = Column(Text, nullable=True)
@@ -57,6 +69,8 @@ class Song(Base):
     external_sources = relationship("ExternalSource", back_populates="song", cascade="all, delete-orphan")
     mega_files = relationship("MegaFileReference", back_populates="song", cascade="all, delete-orphan")
     download_links = relationship("DownloadLink", back_populates="song", cascade="all, delete-orphan")
+    versions = relationship("SongVersion", back_populates="song", cascade="all, delete-orphan")
+    references = relationship("SongReference", back_populates="song", cascade="all, delete-orphan")
     era = relationship("Era", back_populates="songs")
 
 
@@ -93,3 +107,43 @@ class Producer(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), unique=True, index=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+
+class SongVersion(Base):
+    """Alternate or known versions of a song."""
+    __tablename__ = "song_version"
+    __table_args__ = (UniqueConstraint("song_id", "title", "version_type", name="uq_song_version"),)
+
+    id = Column(Integer, primary_key=True, index=True)
+    song_id = Column(Integer, ForeignKey("song.id"), nullable=False, index=True)
+    title = Column(String(255), nullable=False)
+    version_type = Column(String(50), default="released", nullable=False)
+    release_status = Column(String(20), default=ReleaseStatus.UNKNOWN.value, nullable=False)
+    is_base_version = Column(Boolean, default=False, nullable=False)
+    recorded_date = Column(String(50), nullable=True)
+    surfaced_date = Column(String(50), nullable=True)
+    source_name = Column(String(100), nullable=True)
+    source_url = Column(Text, nullable=True)
+    confidence = Column(Float, default=1.0, nullable=False)
+    sort_order = Column(Integer, default=0, nullable=False)
+    notes = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    song = relationship("Song", back_populates="versions")
+
+
+class SongReference(Base):
+    """Non-download reference links for song metadata."""
+    __tablename__ = "song_reference"
+
+    id = Column(Integer, primary_key=True, index=True)
+    song_id = Column(Integer, ForeignKey("song.id"), nullable=False, index=True)
+    source_type = Column(String(50), default="manual", nullable=False)
+    source_name = Column(String(100), nullable=False)
+    source_url = Column(Text, nullable=True)
+    description = Column(Text, nullable=True)
+    confidence = Column(Float, default=1.0, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    song = relationship("Song", back_populates="references")

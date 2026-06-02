@@ -1,12 +1,11 @@
 """Safety tests to verify no unauthorized links are leaked."""
-import pytest
 
 from app.core.security import redact_private_urls
 
 
 def test_redact_mega_links() -> None:
     """Test that MEGA links are redacted."""
-    text = "Download from https://mega.nz/folder/ABCD1234#encrypted"
+    text = "Download from https://mega.nz/folder/redaction-fixture"
     redacted = redact_private_urls(text)
 
     assert "mega.nz" not in redacted

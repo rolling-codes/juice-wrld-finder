@@ -1,5 +1,6 @@
 """Era repository for database operations."""
-from typing import Optional, List
+from typing import Any, Optional
+
 from sqlalchemy.orm import Session
 
 from app.models import Era
@@ -20,7 +21,7 @@ class EraRepository:
         """Get era by name."""
         return self.db.query(Era).filter(Era.name == name).first()
 
-    def get_all(self, skip: int = 0, limit: int = 100) -> List[Era]:
+    def get_all(self, skip: int = 0, limit: int = 100) -> list[Era]:
         """Get all eras with pagination."""
         return self.db.query(Era).offset(skip).limit(limit).all()
 
@@ -32,7 +33,7 @@ class EraRepository:
         self.db.refresh(era)
         return era
 
-    def update(self, era_id: int, **kwargs: any) -> Optional[Era]:
+    def update(self, era_id: int, **kwargs: Any) -> Optional[Era]:
         """Update an era."""
         era = self.get_by_id(era_id)
         if not era:

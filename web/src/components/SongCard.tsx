@@ -11,8 +11,23 @@ const releaseStatusColor: Record<string, string> = {
   unknown: 'bg-gray-700 text-gray-200',
 }
 
+function getVersionCount(song: Song): number | null {
+  return song.version_count ?? null
+}
+
+function getReferenceCount(song: Song): number | null {
+  return song.reference_count ?? null
+}
+
+function getSourceLabels(song: Song): string[] {
+  return song.source_names ?? []
+}
+
 export default function SongCard({ song }: SongCardProps) {
   const statusColor = releaseStatusColor[song.release_status.toLowerCase()] || releaseStatusColor.unknown
+  const versionCount = getVersionCount(song)
+  const referenceCount = getReferenceCount(song)
+  const sourceLabels = getSourceLabels(song)
 
   return (
     <Link to={`/songs/${song.id}`}>
@@ -27,7 +42,22 @@ export default function SongCard({ song }: SongCardProps) {
               Era {song.era_id}
             </span>
           )}
+          {versionCount !== null && (
+            <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-cyan-900 text-cyan-100">
+              {versionCount} {versionCount === 1 ? 'version' : 'versions'}
+            </span>
+          )}
+          {referenceCount !== null && (
+            <span className="inline-block px-2 py-1 rounded text-xs font-medium bg-indigo-900 text-indigo-100">
+              {referenceCount} {referenceCount === 1 ? 'source' : 'sources'}
+            </span>
+          )}
         </div>
+        {sourceLabels.length > 0 && (
+          <p className="text-xs text-gray-500 mb-2 line-clamp-1">
+            Sources: {sourceLabels.join(', ')}
+          </p>
+        )}
         {song.notes && (
           <p className="text-sm text-gray-400 line-clamp-2">{song.notes}</p>
         )}

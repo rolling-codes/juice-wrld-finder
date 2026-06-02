@@ -16,11 +16,11 @@ These MEGA folders contain Juice WRLD songs and are referenced for **metadata pu
 
 | Label | Link | Status |
 |-------|------|--------|
-| Main Comp | [Main Compilation](https://mega.nz/folder/LU9gWY7Z#PMTqIPB69dT0OW5CiHEizQ) | Active |
-| Era Comp | [Era Compilation](https://mega.nz/folder/XREQ3A7a#1IYPO9liju-ORDSZs4JJCQ) | Outdated |
-| Cover Art Comp | [Cover Art](https://mega.nz/folder/6B5wmJzL#OeN-JJXayEHfXyLYhLfBkg) | Active |
-| Media Comp | [Media References](https://mega.nz/folder/XU5FUCxJ#gECLcpANW9MkVFZtCfMe3Q) | Active |
-| Session Edits Comp | [Session Edits](https://mega.nz/folder/DYZWiBBD#dtXjRHEOJTi2KWYGR2MGew) | Active |
+| Main Comp | Configure with `MEGA_MAIN_COMP` | Optional |
+| Era Comp | Configure with `MEGA_ERA_COMP` | Optional |
+| Cover Art Comp | Configure with `MEGA_COVER_ART_COMP` | Optional |
+| Media Comp | Configure with `MEGA_MEDIA_COMP` | Optional |
+| Session Edits Comp | Configure with `MEGA_SESSION_EDITS_COMP` | Optional |
 
 ## Usage Policy
 
@@ -37,6 +37,20 @@ These MEGA folders contain Juice WRLD songs and are referenced for **metadata pu
 - Reference official release information
 - Ask users to verify song details from official sources
 
+## Version and Reference Records
+
+The app stores references separately from download links. A reference can support metadata such as version type, earliest/base version, recorded date, surfaced date, source confidence, and notes. A reference URL is never used by `/downloads/{song_id}` unless an admin also creates a separate PUBLIC `DownloadLink`.
+
+Supported reference labels include:
+
+- Juice WRLD API
+- Juice WRLD Vault
+- Juicehub
+- MusicBrainz
+- Musicfetch
+- SonoVault
+- Manual
+
 ## Official Streaming Sources
 
 For released songs, always link to official platforms:
@@ -49,6 +63,6 @@ For released songs, always link to official platforms:
 
 The community Juice WRLD API at `https://juicewrldapi.com/` provides metadata and may include download links. This is used when `EXPOSE_API_DOWNLOAD_LINKS=true`.
 
-- **API Base:** https://juicewrldapi.com/api
-- **Docs:** https://juicewrldapi.com/docs
+- **API Base:** `https://juicewrldapi.com/api`
+- **Docs:** `https://juicewrldapi.com/docs`
 - **Status:** Community-maintained (unofficial, not endorsed by label)
