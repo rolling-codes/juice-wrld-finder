@@ -5,7 +5,7 @@ Complete setup instructions for local development of the Juice WRLD Finder.
 ## Prerequisites
 
 - **Python 3.11+** (backend)
-- **Node.js 18+** (frontend)
+- **Node.js 20.19+** (frontend)
 - **Git** (for version control)
 - **npm** (comes with Node.js)
 
