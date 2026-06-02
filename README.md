@@ -112,9 +112,11 @@ Once the app is running, use the admin interface to add songs individually.
 ## Features
 
 - 🔍 **Fast Search** — Full-text + fuzzy search across song titles, aliases, and producers
+- 🔎 **Advanced Filtering** — Discover songs by era, release status, producer, and recording date
 - 🤖 **Discord Bot** — Native Discord slash commands for instant metadata lookups
 - 🌐 **REST API** — FastAPI backend for programmatic access
 - 🎵 **Comprehensive Metadata** — Songs, eras, producers, sessions, lyrics, cover art
+- 📥 **Download Integration** — Direct links to Juice WRLD API and MEGA folders
 - 🔐 **Safe By Default** — Controlled download link exposure via environment flags
 - 📊 **Admin Tools** — CSV/JSON import, MEGA folder indexing, manual edits
 - 🧪 **90%+ Test Coverage** — Production-ready test suite
@@ -267,19 +269,27 @@ python scripts/import_csv.py songs.csv
 ## API Endpoints
 
 ```
-GET  /health                    # Health check
-GET  /songs                     # List songs
-GET  /songs/{id}                # Get song details
-GET  /search?q=<query>          # Search songs
-GET  /search/lyrics?q=<phrase>  # Search lyrics
-GET  /eras                      # List eras
-GET  /eras/{id}/songs           # Songs from era
-GET  /producers                 # List producers
+GET  /health                           # Health check
+GET  /songs?era_id=1&release_status=released  # List songs with filters
+GET  /songs/{id}                       # Get song details
+GET  /search?q=<query>                 # Search songs
+GET  /search/lyrics?q=<phrase>         # Search lyrics
+GET  /eras                             # List all eras
+GET  /eras/{id}                        # Get era details
+GET  /eras/{id}/songs                  # Get songs from era
+GET  /producers                        # List producers
+GET  /downloads/{song_id}              # Download a song (redirects to source)
 
-POST   /admin/songs             # Create song
-PATCH  /admin/songs/{id}        # Update song
-DELETE /admin/songs/{id}        # Delete song
+POST   /admin/songs                    # Create song
+PATCH  /admin/songs/{id}               # Update song
+DELETE /admin/songs/{id}               # Delete song
 ```
+
+**Song Filter Parameters:**
+- `era_id` — Filter by era (e.g., `?era_id=1`)
+- `release_status` — Filter by status: `released`, `unreleased`, `unknown`
+- `skip` — Pagination offset (default: 0)
+- `limit` — Results limit (default: 100)
 
 ## Configuration
 
